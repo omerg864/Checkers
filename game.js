@@ -5,7 +5,27 @@ var data = {name1: "Player1", name2: "player2", eaten1: 0, eaten2: 0}
 var eaten1 = document.getElementById("eaten1");
 var eaten2 = document.getElementById("eaten2");
 
+const removeBoard = () => {
+    document.getElementById("closeModal").click();
+    let GameBoard = document.getElementById("board");
+    GameBoard.innerHTML = "";
+    let player1Tag = document.getElementById("name1");
+    player1Tag.innerHTML = "";
+    let player2Tag = document.getElementById("name2");
+    player2Tag.innerHTML = "";
+    let pointer1 = document.getElementById("pointer1");
+    let pointer2 = document.getElementById("pointer2");
+    if(pointer1.classList.contains("opacity-0")) {
+        pointer1.classList.remove("opacity-0");
+        pointer2.classList.add("opacity-0");
+    }
+    data = {name1: "Player1", name2: "player2", eaten1: 0, eaten2: 0}
+    eaten1.innerHTML = data.eaten1;
+    eaten2.innerHTML = data.eaten2;
+}
+
 const resetBoard = () => {
+    removeBoard();
     turn = 1;
     board = [[0,1,0,1,0,1,0,1],
             [1,0,1,0,1,0,1,0],
@@ -15,16 +35,10 @@ const resetBoard = () => {
             [2,0,2,0,2,0,2,0],
             [0,2,0,2,0,2,0,2],
             [2,0,2,0,2,0,2,0]];
-    let player1Tag = document.getElementById("player1");
-    let player1TagHTML = document.createElement("h4");
-    player1TagHTML.id = "name1";
-    player1TagHTML.innerHTML = data.name1;
-    player1Tag.appendChild(player1TagHTML);
-    let player2Tag = document.getElementById("player2");
-    let player2TagHTML = document.createElement("h4");
-    player2TagHTML.id = "name2";
-    player2TagHTML.innerHTML = data.name2;
-    player2Tag.appendChild(player2TagHTML);
+    let player1Tag = document.getElementById("name1");
+    player1Tag.innerHTML = data.name1;
+    let player2Tag = document.getElementById("name2");
+    player2Tag.innerHTML = data.name2;
     eaten1.innerHTML = data.eaten1;
     eaten2.innerHTML = data.eaten2;
     let GameBoard = document.getElementById("board");
@@ -65,6 +79,7 @@ const resetBoard = () => {
         }
         GameBoard.appendChild(row);
     }
+    canMove();
 }
 
 const switchTurn = () => {
@@ -96,8 +111,8 @@ const switchTurn = () => {
         pointer1.classList.remove("opacity-0");
         pointer2.classList.add("opacity-0");
     }
-
     canMove();
+    checkWinLoseTie();
 }
 
 const movableAreas = (row, col, king) => {
@@ -226,6 +241,34 @@ const removeGlowing = (movableSpots) => {
     }
 }
 
+const checkWinLoseTie = () => {
+    let movable = document.getElementsByClassName("glowing");
+    let modalTitle = document.getElementById("modalTitle");
+    let modalBody = document.getElementById("modalBody");
+    if(data.eaten1 == 12) {
+        modalTitle.innerHTML = `${data.name1} Wins!`;
+        modalBody.innerHTML = `${data.name1} has eaten 12 pieces. to restart the game click on the restart button`;
+        document.getElementById("openModal").click();
+    } else if(data.eaten2 == 12) {
+        modalTitle.innerHTML = `${data.name2} Wins!`;
+        modalBody.innerHTML = `${data.name2} has eaten 12 pieces. to restart the game click on the restart button`;
+        document.getElementById("openModal").click();
+    }else if(movable.length == 0) {
+        if(data.eaten1 > data.eaten2) { 
+            modalTitle.innerHTML = `${data.name1} Wins!`;
+            modalBody.innerHTML = `${data.name1} has eaten 12 pieces. to restart the game click on the restart button`;
+        } else if(data.eaten1 < data.eaten2) {
+            modalTitle.innerHTML = `${data.name2} Wins!`;
+            modalBody.innerHTML = `${data.name2} has eaten 12 pieces. to restart the game click on the restart button`;
+        } else {
+            // TODO tie
+            modalTitle.innerHTML = `Tie!`;
+            modalBody.innerHTML = `Both`;
+        }
+        document.getElementById("openModal").click();
+    }
+}
+
 const move = (event) => {
     let selected = document.getElementsByClassName("glowing-yellow");
     let piece = selected[0].firstChild;
@@ -263,10 +306,12 @@ const move = (event) => {
         removeGlowing(movableSpots);
         if(turn == 1) {
             if(newRow == 7) {
+                // TODO king
                 piece.classList.add("king");
             }
         } else {
             if(newRow == 0) {
+                // TODO king
                 piece.classList.add("king");
             }
         }
@@ -277,7 +322,6 @@ const move = (event) => {
 
 const main = () => {
     resetBoard();
-    canMove();
 }
 
 main();

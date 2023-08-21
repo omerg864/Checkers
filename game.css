@@ -142,11 +142,12 @@ html, body {
 
 main {
     height: 80%;
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin: 2vh 2vw;
+    box-sizing: border-box;
 }
 
 .width-35p {
