@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Checkers</title>
+    <link rel="stylesheet" href="game.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  </head>
+  <body>
+    <header>
+        <nav class="navbar bg-body-tertiary navbar-dark">
+            <div class="container-fluid">
+              <a class="navbar-brand text-black" href="#">
+                <img src="https://play-lh.googleusercontent.com/Jk_WrFIS6gn5HHta71xz-vqLIMHIwnp5kpYCB7TP5Zyv1szdcfo9LuoR7qpho2YDSpDw=w600-h300-pc0xffffff-pd" alt="Logo" height="24" class="d-inline-block align-text-top">
+                Checkers
+              </a>
+            </div>
+            <div class="d-flex text-center align-items-center flex-fill justify-content-center">
+                <span id="player1" class="badge text-bg-dark position-relative">
+                    <span id="pointer1" class="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">
+                  </span></span>
+                <h4>&nbsp;VS&nbsp;</h4>
+                <span id="player2" class="badge text-bg-danger position-relative">
+                    <span id="pointer2" class="position-absolute opacity-0 top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">
+                    </span>
+                </span>
+            </div>
+          </nav>
+    </header>
+    <main class="d-flex flex-row">
+    <div id="board">
+    </div>
+    <div class="d-flex flex-column ms-2 width-35p">
+        <span id="score1" class="badge text-bg-dark rounded-0 rounded-top"><h4 id="eaten1"></h4></span>
+        <span id="score2" class="badge text-bg-danger rounded-0 rounded-bottom"><h4 id="eaten2"></h4></span>
+    </div>
+    </main>
+    <footer>
+        
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script src="game.js"></script>
+  </body>
+</html>

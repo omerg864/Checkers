@@ -1,0 +1,154 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.white {
+    background-color: rgb(159, 114, 56);
+}
+
+.black {
+    background-color: rgb(222, 184, 135);
+}
+
+.spot {
+    width: 12.5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.piece {
+    width: 70%;
+    height: 70%;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.board-row {
+    width: 100%;
+    height: 12.5%;
+    display: flex;
+}
+
+.black-piece {
+    background-color: black;
+}
+
+.red-piece {
+    background-color: rgb(205, 38, 38);
+}
+
+.glowing {
+    animation-name: whiteChange;
+    animation-iteration-count: infinite;  
+    animation-duration: 2s; 
+}
+
+@keyframes whiteChange {
+    0% {
+        background-color: rgb(159, 114, 56, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+    50% {
+        background-color: rgb(159, 114, 56, 1);
+        border: none;
+    }
+    100% {
+        background-color: rgb(159, 114, 56, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+}
+
+.glowing-yellow {
+    animation-name: yellowChange;
+    animation-iteration-count: infinite;  
+    animation-duration: 2s; 
+}
+
+@keyframes yellowChange {
+    0% {
+        background-color: rgba(196, 196, 0, 0.702);
+        border: 1px solid rgba(232, 215, 26, 1);
+    }
+    50% {
+        background-color: rgb(159, 114, 56, 1);
+        border: 1px solid rgba(232, 215, 26, 1);
+    }
+    100% {
+        background-color: rgba(196, 196, 0, 0.702);
+        border: 1px solid rgba(232, 215, 0, 0.7);
+    }
+}
+
+.glowing-green {
+    animation-name: greenChange;
+    animation-iteration-count: infinite;  
+    animation-duration: 2s; 
+    cursor: pointer;
+}
+
+@keyframes greenChange {
+    0% {
+        background-color: rgba(46, 196, 0, 0.702);
+        border: 1px solid rgb(57, 232, 26);
+    }
+    50% {
+        background-color: rgb(159, 114, 56, 1);
+        border: 1px solid rgb(57, 232, 26);
+    }
+    100% {
+        background-color: rgba(46, 196, 0, 0.702);
+        border: 1px solid rgb(57, 232, 26);
+    }
+}
+
+.glowing-red {
+    animation-name: redChange;
+    animation-iteration-count: infinite;  
+    animation-duration: 2s; 
+    cursor: pointer;
+}
+
+@keyframes redChange {
+    0% {
+        background-color: rgba(196, 0, 0, 0.702);
+        border: 1px solid rgb(232, 26, 26);
+    }
+    50% {
+        background-color: rgb(159, 114, 56, 1);
+        border: 1px solid rgb(232, 26, 26);
+    }
+    100% {
+        background-color: rgba(196, 0, 0, 0.702);
+        border: 1px solid rgb(232, 26, 26);
+    }
+}
+
+#board {
+    width: 80vh;
+    height: 80vh;
+}
+
+main {
+    height: 80%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.width-35p {
+    width: 35px;
+}
