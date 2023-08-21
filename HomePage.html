@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkers Team Selection</title>
+    <link rel="stylesheet" href="HomePage.css">
+</head>
+<body>
+<h1>Checkers Team Selection</h1>
+<div class="player-section">
+    <h2>Player 1</h2>
+    <div class="team-selection">
+        <label for="team-color-1">Select your team color:</label>
+        <select id="team-color-1">
+            <option value="red">Red</option>
+            <option value="black">Black</option>
+        </select>
+        <br>
+        <label for="player-name-1">Enter your name:</label>
+        <input type="text" id="player-name-1" placeholder="Your Name">
+        <br>
+    </div>
+</div>
+<div class="player-section">
+    <h2>Player 2</h2>
+    <div class="team-selection">
+        <label for="team-color-2">Select your team color:</label>
+        <select id="team-color-2">
+            <option value="red">Red</option>
+            <option value="black">Black</option>
+        </select>
+        <br>
+        <label for="player-name-2">Enter your name:</label>
+        <input type="text" id="player-name-2" placeholder="Your Name">
+        <br>
+    </div>
+</div>
+<p>
+<button id="select-button">Select Teams</button>
+</p>
+<div id="team-display">
+    <p id="selected-teams"></p>
+</div>
+<script src="HomePage.js"></script>
+</body>
+</html>
