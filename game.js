@@ -294,7 +294,7 @@ const checkWinLoseTie = () => {
     let movable = document.getElementsByClassName("glowing");
     let modalTitle = document.getElementById("modalTitle");
     let modalBody = document.getElementById("modalBody");
-    if(data.eaten1 == 12) {
+    if(data.eaten1 == 2) {
         modalTitle.innerHTML = `${data.name1} Wins!`;
         modalBody.innerHTML = `${data.name1} has eaten 12 pieces. to restart the game click on the restart button`;
         document.getElementById("openModal").click();
@@ -358,6 +358,29 @@ const animateMove = async (movements, piece, currentX, currentY) => {
     }
     newSpot.appendChild(piece);
     piece.classList.remove("opacity-0");
+}
+
+const goToHome = () => {
+    window.location.href = 'HomePage.html';
+}
+
+const removeAllClass = (className) => {
+    let removing= document.getElementsByClassName(className);
+    while(removing.length > 0){
+        removing[0].classList.remove(className);
+    }
+}
+
+const showBoardIdle = () => {
+    let pieces = document.getElementsByClassName("piece");
+    for(let i = 0;i < pieces.length;i++) {
+        pieces[i].removeEventListener("click", selectPiece);
+    }
+    removeAllClass("clickable");
+    removeAllClass("glowing");
+    removeAllClass("glowing-red");
+    removeAllClass("glowing-yellow");
+    removeAllClass("glowing-green");
 }
 
 const move = (event) => {
