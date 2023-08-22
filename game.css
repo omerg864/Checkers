@@ -150,6 +150,10 @@ main {
     box-sizing: border-box;
 }
 
+.crown {
+    height: 60%;
+}
+
 .width-35p {
     width: 35px;
 }

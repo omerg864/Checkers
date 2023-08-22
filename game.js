@@ -117,8 +117,8 @@ const switchTurn = () => {
 
 const movableAreas = (row, col, king) => {
     // TODO add king support
-    // TODO add eating multiple support
     let movable = [];
+    console.log(row + " " + col + " " + turn);
     if(turn == 1) {
         if(!king) {
             if(row != 7) {
@@ -126,13 +126,27 @@ const movableAreas = (row, col, king) => {
                     if(board[row+1][col-1] == 0) {
                         movable.push({row: row+1, col: col-1, color: "green", eating: []});
                     } else if(col > 1 && row < 6 && board[row+1][col-1] == 2 && board[row+2][col-2] == 0) {
-                        movable.push({row: row + 2, col: col - 2, color: "red", eating: [[row+1, col-1]]});
+                        let anotherMove = movableAreas(row + 2, col - 2).filter(move => {
+                            return move.color == "red"
+                        });
+                        if(anotherMove.length > 0) {
+                            anotherMove[0].eating.push([row + 1, col - 1]);
+                            movable.push(anotherMove[0]);
+                        }
+                        movable.push({row: row + 2, col: col - 2, color: "red", eating: [[row + 1, col - 1]]});
                     }
                 }
                 if(col != 7) {
                     if(board[row+1][col+1] == 0) {
                         movable.push({row: row + 1, col: col + 1, color: "green", eating: []});
                     } else if(col < 6 && row < 6 && board[row+1][col+1] == 2 && board[row+2][col+2] == 0) {
+                        let anotherMove = movableAreas(row + 2, col + 2).filter(move => {
+                            return move.color == "red"
+                        });
+                        if(anotherMove.length > 0) {
+                            anotherMove[0].eating.push([row + 1, col + 1]);
+                            movable.push(anotherMove[0]);
+                        }
                         movable.push({row: row + 2, col: col + 2, color: "red" , eating: [[row+1, col+1]]});
                     }
                 }
@@ -145,20 +159,33 @@ const movableAreas = (row, col, king) => {
                     if(board[row - 1][col-1] == 0) {
                         movable.push({row: row - 1, col: col - 1, color: "green", eating: []});
                     } else if(col > 1 && row > 1 && board[row - 1][col-1] == 1 && board[row - 2][col-2] == 0) {
+                        let anotherMove = movableAreas(row - 2, col - 2).filter(move => {
+                            return move.color == "red"
+                        });
+                        if(anotherMove.length > 0) {
+                            anotherMove[0].eating.push([row-1, col-1]);
+                            movable.push(anotherMove[0]);
+                        }
                         movable.push({row: row - 2, col: col - 2, color: "red", eating: [[row-1, col-1]]});
                     }
                 }
                 if(col != 7) {
                     if(board[row - 1][col+1] == 0) {
                         movable.push({row: row - 1, col: col + 1, color: "green", eating: 0});
-                    } else if(col < 6 && row > 1 && board[row - 1][col+1] == 1 && board[row - 2][col+2] == 0) {
+                    } else if(col < 6 && row > 1 && board[row - 1][col+1] == 1 && board[row - 2][col + 2] == 0) {
+                        let anotherMove = movableAreas(row - 2, col + 2).filter(move => {
+                            return move.color == "red"
+                        });
+                        if(anotherMove.length > 0) {
+                            anotherMove[0].eating.push([row - 1, col + 1]);
+                            movable.push(anotherMove[0]);
+                        }
                         movable.push({row: row - 2, col: col + 2, color: "red", eating: [[row-1, col+1]]});
                     }
                 }
             }
         }
     }
-    console.log(row + " " + col);
     console.log(movable);
     return movable;
 }
@@ -302,21 +329,20 @@ const move = (event) => {
             eaten1.innerHTML = data.eaten1;
             eaten2.innerHTML = data.eaten2;
         }
-        console.log(data);
         removeGlowing(movableSpots);
-        if(turn == 1) {
-            if(newRow == 7) {
-                // TODO king
-                piece.classList.add("king");
-            }
-        } else {
-            if(newRow == 0) {
-                // TODO king
-                piece.classList.add("king");
-            }
+        if((turn == 1 && newRow == 7) || (turn == 2 && newRow == 0)) {
+            makeKing(piece);
         }
         switchTurn();
     }
+}
+
+const makeKing = (piece) => {
+    piece.classList.add("king");
+    let img = document.createElement("img");
+    img.classList.add("crown");
+    img.src = "https://cdn-icons-png.flaticon.com/512/6941/6941697.png";
+    piece.appendChild(img);
 }
 
 
