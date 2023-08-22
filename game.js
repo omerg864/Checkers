@@ -118,6 +118,7 @@ const switchTurn = () => {
 
 const movableAreas = (row, col, king, tempBoard) => {
     let movable = [];
+    console.log(row, col, king, tempBoard);
     if(turn == 1 || king) {
             if(row != 7) {
                 if(col != 0) {
@@ -129,9 +130,9 @@ const movableAreas = (row, col, king, tempBoard) => {
                         let anotherMove = movableAreas(row + 2, col - 2, king, newBoard).filter(move => {
                             return move.color == "red"
                         });
-                        if(anotherMove.length > 0) {
-                            anotherMove[0].eating.push([row + 1, col - 1]);
-                            movable.push(anotherMove[0]);
+                        for(let i = 0 ;i < anotherMove.length; i++) {
+                            anotherMove[i].eating.push([row + 1, col - 1]);
+                            movable.push(anotherMove[i]);
                         }
                         movable.push({row: row + 2, col: col - 2, color: "red", eating: [[row + 1, col - 1]]});
                     }
@@ -145,9 +146,9 @@ const movableAreas = (row, col, king, tempBoard) => {
                         let anotherMove = movableAreas(row + 2, col + 2, king, newBoard).filter(move => {
                             return move.color == "red"
                         });
-                        if(anotherMove.length > 0) {
-                            anotherMove[0].eating.push([row + 1, col + 1]);
-                            movable.push(anotherMove[0]);
+                        for(let i = 0 ;i < anotherMove.length; i++) {
+                            anotherMove[i].eating.push([row + 1, col + 1]);
+                            movable.push(anotherMove[i]);
                         }
                         movable.push({row: row + 2, col: col + 2, color: "red" , eating: [[row+1, col+1]]});
                     }
@@ -165,9 +166,9 @@ const movableAreas = (row, col, king, tempBoard) => {
                         let anotherMove = movableAreas(row - 2, col - 2, king, newBoard).filter(move => {
                             return move.color == "red"
                         });
-                        if(anotherMove.length > 0) {
-                            anotherMove[0].eating.push([row-1, col-1]);
-                            movable.push(anotherMove[0]);
+                        for(let i = 0 ;i < anotherMove.length; i++) {
+                            anotherMove[i].eating.push([row-1, col-1]);
+                            movable.push(anotherMove[i]);
                         }
                         movable.push({row: row - 2, col: col - 2, color: "red", eating: [[row-1, col-1]]});
                     }
@@ -181,15 +182,16 @@ const movableAreas = (row, col, king, tempBoard) => {
                         let anotherMove = movableAreas(row - 2, col + 2, king, newBoard).filter(move => {
                             return move.color == "red"
                         });
-                        if(anotherMove.length > 0) {
-                            anotherMove[0].eating.push([row - 1, col + 1]);
-                            movable.push(anotherMove[0]);
+                        for(let i = 0 ;i < anotherMove.length; i++) {
+                            anotherMove[i].eating.push([row - 1, col + 1]);
+                            movable.push(anotherMove[i]);
                         }
                         movable.push({row: row - 2, col: col + 2, color: "red", eating: [[row-1, col+1]]});
                     }
                 }
             }
     }
+    console.log(movable);
     return movable;
 }
 
@@ -334,7 +336,6 @@ const move = (event) => {
         let newSpot = document.getElementById(newRow + "-" + newCol);
         let currentX = selected[0].offsetLeft;
         let currentY = selected[0].offsetTop;
-        console.log(currentX + " " + currentY);
         newSpot.innerHTML = "";
         let tempSpot = document.createElement("div");
         tempSpot.id = "tempSpot";
@@ -343,7 +344,11 @@ const move = (event) => {
         tempSpot.className = "spot";
         tempSpot.style.height = "12.5%";
         tempPiece.classList = piece.classList;
-        tempPiece.innerHTML = "&nbsp;";
+        if(tempPiece.classList.contains("king")) {
+            tempPiece.innerHTML = piece.innerHTML;
+        } else {
+            tempPiece.innerHTML = "&nbsp;";
+        }
         tempSpot.appendChild(tempPiece);
         tempSpot.style.left = currentX + "px";
         tempSpot.style.top = currentY + "px";
