@@ -294,7 +294,7 @@ const checkWinLoseTie = () => {
     let movable = document.getElementsByClassName("glowing");
     let modalTitle = document.getElementById("modalTitle");
     let modalBody = document.getElementById("modalBody");
-    if(data.eaten1 == 2) {
+    if(data.eaten1 == 12) {
         modalTitle.innerHTML = `${data.name1} Wins!`;
         modalBody.innerHTML = `${data.name1} has eaten 12 pieces. to restart the game click on the restart button`;
         document.getElementById("openModal").click();
