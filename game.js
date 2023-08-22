@@ -122,7 +122,7 @@ const movableAreas = (row, col, king, tempBoard) => {
             if(row != 7) {
                 if(col != 0) {
                     if(board[row+1][col-1] == 0) {
-                        movable.push({row: row+1, col: col-1, color: "green", eating: []});
+                        movable.push({row: row+1, col: col-1, color: "green", eating: [], movements: [[row+1, col-1]]});
                     } else if(col > 1 && row < 6 && tempBoard[row+1][col-1] == turnOpp[turn] && board[row+2][col-2] == 0) {
                         let newBoard = createTempBoard(tempBoard);
                         newBoard[row+1][col-1] = 0;
@@ -131,14 +131,15 @@ const movableAreas = (row, col, king, tempBoard) => {
                         });
                         for(let i = 0 ;i < anotherMove.length; i++) {
                             anotherMove[i].eating.push([row + 1, col - 1]);
+                            anotherMove[i].movements.push([row + 2, col - 2]);
                             movable.push(anotherMove[i]);
                         }
-                        movable.push({row: row + 2, col: col - 2, color: "red", eating: [[row + 1, col - 1]]});
+                        movable.push({row: row + 2, col: col - 2, color: "red", eating: [[row + 1, col - 1]], movements: [[row + 2, col - 2]]});
                     }
                 }
                 if(col != 7) {
                     if(board[row+1][col+1] == 0) {
-                        movable.push({row: row + 1, col: col + 1, color: "green", eating: []});
+                        movable.push({row: row + 1, col: col + 1, color: "green", eating: [], movements:[[row + 1, col + 1]]});
                     } else if(col < 6 && row < 6 && tempBoard[row+1][col+1] == turnOpp[turn] && board[row+2][col+2] == 0) {
                         let newBoard = createTempBoard(tempBoard);
                         newBoard[row + 1][col + 1] = 0;
@@ -147,9 +148,10 @@ const movableAreas = (row, col, king, tempBoard) => {
                         });
                         for(let i = 0 ;i < anotherMove.length; i++) {
                             anotherMove[i].eating.push([row + 1, col + 1]);
+                            anotherMove[i].movements.push([row + 2, col + 2]);
                             movable.push(anotherMove[i]);
                         }
-                        movable.push({row: row + 2, col: col + 2, color: "red" , eating: [[row+1, col+1]]});
+                        movable.push({row: row + 2, col: col + 2, color: "red" , eating: [[row+1, col+1]], movements: [[row + 2, col + 2]]});
                     }
                 }
             }
@@ -158,7 +160,7 @@ const movableAreas = (row, col, king, tempBoard) => {
             if(row != 0) {
                 if(col != 0) {
                     if(board[row - 1][col-1] == 0) {
-                        movable.push({row: row - 1, col: col - 1, color: "green", eating: []});
+                        movable.push({row: row - 1, col: col - 1, color: "green", eating: [], movements: [[row - 1, col - 1]]});
                     } else if(col > 1 && row > 1 && tempBoard[row - 1][col-1] == turnOpp[turn] && board[row - 2][col-2] == 0) {
                         let newBoard = createTempBoard(tempBoard);
                         newBoard[row - 1][col - 1] = 0;
@@ -167,14 +169,15 @@ const movableAreas = (row, col, king, tempBoard) => {
                         });
                         for(let i = 0 ;i < anotherMove.length; i++) {
                             anotherMove[i].eating.push([row-1, col-1]);
+                            anotherMove[i].movements.push([row - 2, col - 2]);
                             movable.push(anotherMove[i]);
                         }
-                        movable.push({row: row - 2, col: col - 2, color: "red", eating: [[row-1, col-1]]});
+                        movable.push({row: row - 2, col: col - 2, color: "red", eating: [[row-1, col-1]], movements: [[row - 2, col - 2]]});
                     }
                 }
                 if(col != 7) {
                     if(board[row - 1][col+1] == 0) {
-                        movable.push({row: row - 1, col: col + 1, color: "green", eating: 0});
+                        movable.push({row: row - 1, col: col + 1, color: "green", eating: 0, movements: [[row - 1, col + 1]]});
                     } else if(col < 6 && row > 1 && tempBoard[row - 1][col+1] == turnOpp[turn] && board[row - 2][col + 2] == 0) {
                         let newBoard = createTempBoard(tempBoard);
                         newBoard[row - 1][col + 1] = 0;
@@ -183,9 +186,10 @@ const movableAreas = (row, col, king, tempBoard) => {
                         });
                         for(let i = 0 ;i < anotherMove.length; i++) {
                             anotherMove[i].eating.push([row - 1, col + 1]);
+                            anotherMove[i].movements.push([row - 2, col + 2]);
                             movable.push(anotherMove[i]);
                         }
-                        movable.push({row: row - 2, col: col + 2, color: "red", eating: [[row-1, col+1]]});
+                        movable.push({row: row - 2, col: col + 2, color: "red", eating: [[row-1, col+1]], movements: [[row - 2, col + 2]]});
                     }
                 }
             }
@@ -314,6 +318,48 @@ const checkWinLoseTie = () => {
     }
 }
 
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+const animateMove = async (movements, piece, currentX, currentY) => {
+    let newSpot;
+    piece.classList.add("opacity-0");
+    for(let i = movements.length - 1; i >= 0; i--) {
+        let movement = movements[i];
+        console.log(movement);
+        newSpot = document.getElementById(movement[0] + "-" + movement[1]);
+        console.log(newSpot);
+        newSpot.innerHTML = "";
+        let tempSpot = document.createElement("div");
+        tempSpot.id = "tempSpot";
+        tempSpot.style.position = "absolute"
+        let tempPiece = document.createElement("div");
+        tempSpot.className = "spot";
+        tempSpot.style.height = "12.5%";
+        tempPiece.classList = piece.classList;
+        if(tempPiece.classList.contains("king")) {
+            tempPiece.innerHTML = piece.innerHTML;
+        } else {
+            tempPiece.innerHTML = "&nbsp;";
+        }
+        tempPiece.classList.remove("opacity-0");
+        tempSpot.appendChild(tempPiece);
+        tempSpot.style.left = currentX + "px";
+        tempSpot.style.top = currentY + "px";
+        let GameBoard = document.getElementById("board");
+        GameBoard.appendChild(tempSpot);
+        let newX = newSpot.offsetLeft;
+        let newY = newSpot.offsetTop;
+        tempSpot.style.left = newX + "px";
+        tempSpot.style.top = newY + "px";
+        currentX = newX;
+        currentY = newY;
+        await sleep(1000);
+        tempSpot.remove();
+    }
+    newSpot.appendChild(piece);
+    piece.classList.remove("opacity-0");
+}
+
 const move = (event) => {
     let selected = document.getElementsByClassName("glowing-yellow");
     let piece = selected[0].firstChild;
@@ -331,37 +377,12 @@ const move = (event) => {
         }
     }
     if(indexMove != -1) {
-        let newSpot = document.getElementById(newRow + "-" + newCol);
         let currentX = selected[0].offsetLeft;
         let currentY = selected[0].offsetTop;
-        newSpot.innerHTML = "";
-        let tempSpot = document.createElement("div");
-        tempSpot.id = "tempSpot";
-        tempSpot.style.position = "absolute"
-        let tempPiece = document.createElement("div");
-        tempSpot.className = "spot";
-        tempSpot.style.height = "12.5%";
-        tempPiece.classList = piece.classList;
-        if(tempPiece.classList.contains("king")) {
-            tempPiece.innerHTML = piece.innerHTML;
-        } else {
-            tempPiece.innerHTML = "&nbsp;";
-        }
-        tempSpot.appendChild(tempPiece);
-        tempSpot.style.left = currentX + "px";
-        tempSpot.style.top = currentY + "px";
-        let GameBoard = document.getElementById("board");
-        GameBoard.appendChild(tempSpot);
-        let newX = newSpot.offsetLeft;
-        let newY = newSpot.offsetTop;
-        tempSpot.style.left = newX + "px";
-        tempSpot.style.top = newY + "px";
-        piece.classList.add("opacity-0");
-        setTimeout(() => {
-            newSpot.appendChild(piece);
-            piece.classList.remove("opacity-0");
-            tempSpot.remove();
-        }, 1000);
+        let movements = movableSpots[indexMove].movements;
+        console.log(movableSpots[indexMove]);
+        animateMove(movements, piece, currentX, currentY);
+        let newSpot = document.getElementById(`${movements[movements.length - 1][0]}-${movements[movements.length - 1][1]}`)
         selected[0].classList.remove("glowing-yellow");
         board[row][col] = 0;
         board[newRow][newCol] = turn;
