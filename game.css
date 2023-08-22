@@ -20,6 +20,7 @@ html, body {
     align-items: center;
     padding: 0;
     box-sizing: border-box;
+    transition: left 1s ease-out, top 1s ease-out;
 }
 
 .clickable {
@@ -33,6 +34,10 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.piece-eaten {
+    transition: opacity 1s ease-out;
 }
 
 .board-row {
@@ -138,6 +143,7 @@ html, body {
 #board {
     width: 80vh;
     height: 80vh;
+    position: relative;
 }
 
 main {

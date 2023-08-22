@@ -118,7 +118,6 @@ const switchTurn = () => {
 
 const movableAreas = (row, col, king, tempBoard) => {
     let movable = [];
-    console.log(row + " " + col + " " + turn + " " + king);
     if(turn == 1 || king) {
             if(row != 7) {
                 if(col != 0) {
@@ -191,7 +190,6 @@ const movableAreas = (row, col, king, tempBoard) => {
                 }
             }
     }
-    console.log(movable);
     return movable;
 }
 
@@ -208,17 +206,19 @@ const canMove = () => {
         pieces = document.getElementsByClassName("red-piece");
     }
     for(let i=0; i< pieces.length; i++) {
-        let movable = false;
-        let king = false;
         let piece = pieces[i];
-        let row = parseInt(piece.parentElement.id.split("-")[0]);
-        let col = parseInt(piece.parentElement.id.split("-")[1]);
-        if (piece.classList.contains("king")) {
-            king = true;
-        }
-        movable = movableAreas(row, col, king, createTempBoard(board)).length > 0 ? true : false;
-        if(movable) {
-            piece.parentElement.classList.add("glowing");
+        if(!piece.classList.contains("piece-eaten")) {
+            let movable = false;
+            let king = false;
+            let row = parseInt(piece.parentElement.id.split("-")[0]);
+            let col = parseInt(piece.parentElement.id.split("-")[1]);
+            if (piece.classList.contains("king")) {
+                king = true;
+            }
+            movable = movableAreas(row, col, king, createTempBoard(board)).length > 0 ? true : false;
+            if(movable) {
+                piece.parentElement.classList.add("glowing");
+            }
         }
     }
 }
@@ -240,7 +240,6 @@ const selectPiece = (event) => {
     event.preventDefault();
     let selected = document.getElementsByClassName("glowing-yellow");
     if(selected.length > 0) {
-        console.log(selected);
         let piece = selected[0].firstChild;
         let king = false;
         if(piece.classList.contains("king")) {
@@ -263,7 +262,6 @@ const selectPiece = (event) => {
     let row = parseInt(piece.parentElement.id.split("-")[0]);
     let col = parseInt(piece.parentElement.id.split("-")[1]);
     let movable = piece.parentElement.classList.contains("glowing");
-    console.log(row + " " + col);
     piece.parentElement.classList.remove("glowing");
     piece.parentElement.classList.add("glowing-yellow");
     if(movable) {
@@ -334,15 +332,45 @@ const move = (event) => {
     }
     if(indexMove != -1) {
         let newSpot = document.getElementById(newRow + "-" + newCol);
+        let currentX = selected[0].offsetLeft;
+        let currentY = selected[0].offsetTop;
+        console.log(currentX + " " + currentY);
         newSpot.innerHTML = "";
-        newSpot.appendChild(piece);
+        let tempSpot = document.createElement("div");
+        tempSpot.id = "tempSpot";
+        tempSpot.style.position = "absolute"
+        let tempPiece = document.createElement("div");
+        tempSpot.className = "spot";
+        tempSpot.style.height = "12.5%";
+        tempPiece.classList = piece.classList;
+        tempPiece.innerHTML = "&nbsp;";
+        tempSpot.appendChild(tempPiece);
+        tempSpot.style.left = currentX + "px";
+        tempSpot.style.top = currentY + "px";
+        let GameBoard = document.getElementById("board");
+        GameBoard.appendChild(tempSpot);
+        let newX = newSpot.offsetLeft;
+        let newY = newSpot.offsetTop;
+        tempSpot.style.left = newX + "px";
+        tempSpot.style.top = newY + "px";
+        piece.classList.add("opacity-0");
+        setTimeout(() => {
+            newSpot.appendChild(piece);
+            piece.classList.remove("opacity-0");
+            tempSpot.remove();
+        }, 1000);
         selected[0].classList.remove("glowing-yellow");
         board[row][col] = 0;
         board[newRow][newCol] = turn;
         if(newSpot.classList.contains("glowing-red")) {
             for(let i=0; i< movableSpots[indexMove].eating.length; i++) {
-                let eaten = document.getElementById(movableSpots[indexMove].eating[i][0] + "-" + movableSpots[indexMove].eating[i][1]);
-                eaten.innerHTML = "";
+                let eatenSpot = document.getElementById(movableSpots[indexMove].eating[i][0] + "-" + movableSpots[indexMove].eating[i][1]);
+                let eaten = eatenSpot.firstChild;
+                eaten.classList.add("piece-eaten");
+                eaten.classList.add("opacity-0");
+                setTimeout(() => {
+                    eatenSpot.innerHTML = "";
+                }, 1000);
                 board[movableSpots[indexMove].eating[i][0]][movableSpots[indexMove].eating[i][1]] = 0;
             }
             data["eaten" + turn] += movableSpots[indexMove].eating.length;
