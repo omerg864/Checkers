@@ -118,7 +118,6 @@ const switchTurn = () => {
 
 const movableAreas = (row, col, king, tempBoard) => {
     let movable = [];
-    console.log(row, col, king, tempBoard);
     if(turn == 1 || king) {
             if(row != 7) {
                 if(col != 0) {
@@ -191,7 +190,6 @@ const movableAreas = (row, col, king, tempBoard) => {
                 }
             }
     }
-    console.log(movable);
     return movable;
 }
 

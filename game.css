@@ -141,9 +141,14 @@ html, body {
 }
 
 #board {
-    width: 80vh;
-    height: 80vh;
+    width: min(80vw, 80vh);
+    height: min(80vw, 80vh);
     position: relative;
+    border-width: 2px;
+    border-color: rgb(159, 114, 56);
+    border-style: double;
+    padding: 10px;
+    background-color: rgb(194, 135, 57);
 }
 
 main {
