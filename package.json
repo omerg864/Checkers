@@ -1,0 +1,13 @@
+{
+  "name": "checkers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "HomePage.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "commit": "git add . && git commit -m",
+    "push": "git push origin main"
+  },
+  "author": "",
+  "license": "ISC"
+}
