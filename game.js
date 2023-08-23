@@ -408,6 +408,7 @@ const move = (event) => {
         board[newRow][newCol] = turn;
         if(newSpot.classList.contains("glowing-red")) {
             console.log(movableSpots[indexMove].eating);
+            let multi = 1;
             for(let i = movableSpots[indexMove].eating.length - 1; i >= 0; i--) {
                 console.log(movableSpots[indexMove].eating[i]);
                 let eatenSpot = document.getElementById(movableSpots[indexMove].eating[i][0] + "-" + movableSpots[indexMove].eating[i][1]);
@@ -424,7 +425,8 @@ const move = (event) => {
                         setTimeout(() => {
                             eatenSpot.innerHTML = "";
                         }, 1000);
-                    }, 1000);
+                    }, 1000 * multi);
+                    multi++;
                 }
                 board[movableSpots[indexMove].eating[i][0]][movableSpots[indexMove].eating[i][1]] = 0;
             }
