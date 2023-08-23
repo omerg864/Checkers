@@ -1,0 +1,183 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.white {
+    background-color: rgb(159, 114, 56);
+    border: 1px solid rgb(159, 114, 56);
+    box-sizing: border-box;
+}
+
+.black {
+    background-color: rgb(222, 184, 135);
+    border: 1px solid rgb(222, 184, 135);
+    box-sizing: border-box;
+}
+
+.spot {
+    width: 12.5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    box-sizing: border-box;
+    transition: left 1s ease-out, top 1s ease-out;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.piece {
+    width: 70%;
+    height: 70%;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    border: 2px solid white;
+}
+
+.piece-eaten {
+    transition: opacity 1s ease-out;
+}
+
+.board-row {
+    width: 100%;
+    height: 12.5%;
+    display: flex;
+}
+
+.black-piece {
+    background-color: black;
+}
+
+.red-piece {
+    background-color: rgb(205, 38, 38);
+}
+
+.glowing {
+    animation-name: whiteChange;
+    animation-iteration-count: infinite;  
+    animation-duration: 2s; 
+}
+
+@keyframes whiteChange {
+    0% {
+        background-color: rgba(195, 195, 195, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+    50% {
+        background-color: rgb(159, 114, 56, 1);
+        border: rgb(159, 114, 56, 1);
+    }
+    100% {
+        background-color: rgba(195, 195, 195, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+}
+
+.glowing-yellow {
+    animation-name: yellowChange;
+    animation-iteration-count: infinite;  
+    animation-duration: 2s; 
+}
+
+@keyframes yellowChange {
+    0% {
+        background-color: rgba(196, 196, 0, 0.702);
+        border: 1px solid rgba(232, 215, 26, 1);
+    }
+    50% {
+        background-color: rgb(159, 114, 56, 1);
+        border: 1px solid rgba(232, 215, 26, 1);
+    }
+    100% {
+        background-color: rgba(196, 196, 0, 0.702);
+        border: 1px solid rgba(232, 215, 0, 0.7);
+    }
+}
+
+.glowing-green {
+    animation-name: greenChange;
+    animation-iteration-count: infinite;  
+    animation-duration: 2s; 
+    cursor: pointer;
+}
+
+@keyframes greenChange {
+    0% {
+        background-color: rgba(46, 196, 0, 0.702);
+        border: 1px solid rgb(57, 232, 26);
+    }
+    50% {
+        background-color: rgb(159, 114, 56, 1);
+        border: 1px solid rgb(57, 232, 26);
+    }
+    100% {
+        background-color: rgba(46, 196, 0, 0.702);
+        border: 1px solid rgb(57, 232, 26);
+    }
+}
+
+.glowing-red {
+    animation-name: redChange;
+    animation-iteration-count: infinite;  
+    animation-duration: 2s; 
+    cursor: pointer;
+}
+
+@keyframes redChange {
+    0% {
+        background-color: rgba(196, 0, 0, 0.702);
+        border: 1px solid rgb(232, 26, 26);
+    }
+    50% {
+        background-color: rgb(159, 114, 56, 1);
+        border: 1px solid rgb(232, 26, 26);
+    }
+    100% {
+        background-color: rgba(196, 0, 0, 0.702);
+        border: 1px solid rgb(232, 26, 26);
+    }
+}
+
+#board {
+    width: min(80vh, 80vw);
+    height: min(80vh, 80vw);
+    position: relative;
+    border-width: 2px;
+    border-color: rgb(159, 114, 56);
+    border-style: double;
+    padding: 10px;
+    background-color: rgb(194, 135, 57);
+}
+
+main {
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 2vh 2vw;
+    box-sizing: border-box;
+}
+
+.crown {
+    height: 60%;
+}
+
+.width-35p {
+    width: 35px;
+}
+
+@media only screen and (max-width: 550px) {
+    #sub-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+  }
