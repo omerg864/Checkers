@@ -7,10 +7,14 @@ html, body {
 
 .white {
     background-color: rgb(159, 114, 56);
+    border: 1px solid rgb(159, 114, 56);
+    box-sizing: border-box;
 }
 
 .black {
     background-color: rgb(222, 184, 135);
+    border: 1px solid rgb(222, 184, 135);
+    box-sizing: border-box;
 }
 
 .spot {
@@ -34,6 +38,8 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
+    box-sizing: border-box;
+    border: 2px solid white;
 }
 
 .piece-eaten {
@@ -67,7 +73,7 @@ html, body {
     }
     50% {
         background-color: rgb(159, 114, 56, 1);
-        border: none;
+        border: rgb(159, 114, 56, 1);
     }
     100% {
         background-color: rgba(195, 195, 195, 0.7);
@@ -168,3 +174,10 @@ main {
 .width-35p {
     width: 35px;
 }
+
+@media only screen and (max-width: 550px) {
+    #sub-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+  }

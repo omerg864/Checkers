@@ -325,9 +325,7 @@ const animateMove = async (movements, piece, currentX, currentY) => {
     piece.classList.add("opacity-0");
     for(let i = movements.length - 1; i >= 0; i--) {
         let movement = movements[i];
-        console.log(movement);
         newSpot = document.getElementById(movement[0] + "-" + movement[1]);
-        console.log(newSpot);
         newSpot.innerHTML = "";
         let tempSpot = document.createElement("div");
         tempSpot.id = "tempSpot";
@@ -403,21 +401,31 @@ const move = (event) => {
         let currentX = selected[0].offsetLeft;
         let currentY = selected[0].offsetTop;
         let movements = movableSpots[indexMove].movements;
-        console.log(movableSpots[indexMove]);
         animateMove(movements, piece, currentX, currentY);
         let newSpot = document.getElementById(`${movements[movements.length - 1][0]}-${movements[movements.length - 1][1]}`)
         selected[0].classList.remove("glowing-yellow");
         board[row][col] = 0;
         board[newRow][newCol] = turn;
         if(newSpot.classList.contains("glowing-red")) {
-            for(let i=0; i< movableSpots[indexMove].eating.length; i++) {
+            console.log(movableSpots[indexMove].eating);
+            for(let i = movableSpots[indexMove].eating.length - 1; i >= 0; i--) {
+                console.log(movableSpots[indexMove].eating[i]);
                 let eatenSpot = document.getElementById(movableSpots[indexMove].eating[i][0] + "-" + movableSpots[indexMove].eating[i][1]);
                 let eaten = eatenSpot.firstChild;
                 eaten.classList.add("piece-eaten");
-                eaten.classList.add("opacity-0");
-                setTimeout(() => {
-                    eatenSpot.innerHTML = "";
-                }, 1000);
+                if(i === movableSpots[indexMove].eating.length - 1) {
+                    eaten.classList.add("opacity-0");
+                    setTimeout(() => {
+                        eatenSpot.innerHTML = "";
+                    }, 1000);
+                } else {
+                    setTimeout(() => {
+                        eaten.classList.add("opacity-0");
+                        setTimeout(() => {
+                            eatenSpot.innerHTML = "";
+                        }, 1000);
+                    }, 1000);
+                }
                 board[movableSpots[indexMove].eating[i][0]][movableSpots[indexMove].eating[i][1]] = 0;
             }
             data["eaten" + turn] += movableSpots[indexMove].eating.length;
