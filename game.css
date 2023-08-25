@@ -32,14 +32,13 @@ html, body {
 }
 
 .piece {
-    width: 70%;
-    height: 70%;
+    width: 80%;
+    height: 80%;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    border: 2px solid white;
 }
 
 .piece-eaten {
@@ -53,11 +52,15 @@ html, body {
 }
 
 .black-piece {
-    background-color: black;
+    
 }
 
 .red-piece {
-    background-color: rgb(205, 38, 38);
+    
+}
+
+.piece-icon {
+    height: 100%;
 }
 
 .glowing {

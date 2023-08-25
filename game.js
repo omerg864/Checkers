@@ -1,9 +1,10 @@
-document.addEventListener("DOMContentLoaded", function () {
     //Data
     var board;
     var turn = 1;
     var data = {name1: "Player1", name2: "player2", eaten1: 0, eaten2: 0}
     const turnOpp = {1: 2, 2: 1}
+    const redImage = "/red.png";
+    const blackImage = "/black.png";
 
     // DOM
     // TODO implement jquery
@@ -73,11 +74,19 @@ document.addEventListener("DOMContentLoaded", function () {
                     let piece = document.createElement("div");
                     piece.className = "piece black-piece clickable";
                     piece.addEventListener("click", selectPiece);
+                    let image = document.createElement("img");
+                    image.src = blackImage;
+                    image.classList.add("piece-icon");
+                    piece.appendChild(image);
                     spot.appendChild(piece);
                 }else if(board[i][j] == 2) {
                     // white piece
                     let piece = document.createElement("div");
                     piece.className = "piece red-piece";
+                    let image = document.createElement("img");
+                    image.src = redImage;
+                    image.classList.add("piece-icon");
+                    piece.appendChild(image);
                     spot.appendChild(piece);
                 } else {
                     spot.innerHTML = "&nbsp;";
@@ -325,6 +334,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const animateMove = async (movements, piece, currentX, currentY) => {
         let newSpot;
         piece.classList.add("opacity-0");
+        console.log(piece);
+        let color;
+        if( turn == 1) {
+            color = "black";
+        } else {
+            color = "red";
+        }
         for(let i = movements.length - 1; i >= 0; i--) {
             let movement = movements[i];
             newSpot = document.getElementById(movement[0] + "-" + movement[1]);
@@ -334,13 +350,18 @@ document.addEventListener("DOMContentLoaded", function () {
             tempSpot.style.position = "absolute"
             let tempPiece = document.createElement("div");
             tempSpot.className = "spot";
-            tempSpot.style.height = "12.5%";
+            let dim = newSpot.getBoundingClientRect();
+            tempSpot.style.width = dim.width + "px";
+            tempSpot.style.height = dim.height + "px";
             tempPiece.classList = piece.classList;
+            let image = document.createElement("img");
             if(tempPiece.classList.contains("king")) {
-                tempPiece.innerHTML = piece.innerHTML;
+                image.src = `/${color}King.png`;
             } else {
-                tempPiece.innerHTML = "&nbsp;";
+                image.src = `/${color}.png`;
             }
+            image.classList.add("piece-icon");
+            tempPiece.appendChild(image);
             tempPiece.classList.remove("opacity-0");
             tempSpot.appendChild(tempPiece);
             tempSpot.style.left = currentX + "px";
@@ -446,10 +467,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const makeKing = (piece) => {
         if (!piece.classList.contains("king")) {
             piece.classList.add("king");
-            let img = document.createElement("img");
-            img.classList.add("crown");
-            img.src = "https://cdn-icons-png.flaticon.com/512/6941/6941697.png";
-            piece.appendChild(img);
+            let color;
+            if( turn == 1) {
+                color = "black";
+            } else {
+                color = "red";
+            }
+            piece.firstChild.src = `/${color}King.png`;
         }
     }
 
@@ -459,4 +483,3 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     main();
-});
