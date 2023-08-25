@@ -1,26 +1,35 @@
 
+//Data
 var board;
 var turn = 1;
 var data = {name1: "Player1", name2: "player2", eaten1: 0, eaten2: 0}
-var eaten1 = document.getElementById("eaten1");
-var eaten2 = document.getElementById("eaten2");
-var turnOpp = {1: 2, 2: 1}
+const turnOpp = {1: 2, 2: 1}
+
+// DOM
+// TODO implement jquery
+const eaten1 = document.getElementById("eaten1");
+const eaten2 = document.getElementById("eaten2");
+const GameBoard = document.getElementById("board");
+const pointer1 = document.getElementById("pointer1");
+const pointer2 = document.getElementById("pointer2");
+const player1Tag = document.getElementById("name1");
+const player2Tag = document.getElementById("name2");
+const openModal = document.getElementById("openModal");
+const modalTitle = document.getElementById("modalTitle");
+const modalBody = document.getElementById("modalBody");
+
+
 
 const removeBoard = () => {
     document.getElementById("closeModal").click();
-    let GameBoard = document.getElementById("board");
     GameBoard.innerHTML = "";
-    let player1Tag = document.getElementById("name1");
     player1Tag.innerHTML = "";
-    let player2Tag = document.getElementById("name2");
     player2Tag.innerHTML = "";
-    let pointer1 = document.getElementById("pointer1");
-    let pointer2 = document.getElementById("pointer2");
     if(pointer1.classList.contains("opacity-0")) {
         pointer1.classList.remove("opacity-0");
         pointer2.classList.add("opacity-0");
     }
-    data = {name1: "Player1", name2: "player2", eaten1: 0, eaten2: 0}
+    data = {name1: "Player1", name2: "player2", eaten1: 0, eaten2: 0};
     eaten1.innerHTML = data.eaten1;
     eaten2.innerHTML = data.eaten2;
 }
@@ -36,13 +45,10 @@ const resetBoard = () => {
             [2,0,2,0,2,0,2,0],
             [0,2,0,2,0,2,0,2],
             [2,0,2,0,2,0,2,0]];
-    let player1Tag = document.getElementById("name1");
     player1Tag.innerHTML = data.name1;
-    let player2Tag = document.getElementById("name2");
     player2Tag.innerHTML = data.name2;
     eaten1.innerHTML = data.eaten1;
     eaten2.innerHTML = data.eaten2;
-    let GameBoard = document.getElementById("board");
     for(let i=0; i < 8;i++) {
         let row = document.createElement("div");
         row.className = "board-row";
@@ -85,8 +91,6 @@ const resetBoard = () => {
 
 const switchTurn = () => {
     turn = turn == 1 ? 2 : 1;
-    let pointer1 = document.getElementById("pointer1");
-    let pointer2 = document.getElementById("pointer2");
     let redPieces = document.getElementsByClassName("red-piece");
     let blackPieces = document.getElementsByClassName("black-piece");
     if (turn == 2) {
@@ -292,17 +296,16 @@ const removeGlowing = (movableSpots) => {
 
 const checkWinLoseTie = () => {
     let movable = document.getElementsByClassName("glowing");
-    let modalTitle = document.getElementById("modalTitle");
-    let modalBody = document.getElementById("modalBody");
     if(data.eaten1 == 12) {
         modalTitle.innerHTML = `${data.name1} Wins!`;
         modalBody.innerHTML = `${data.name1} has eaten 12 pieces. to restart the game click on the restart button`;
-        document.getElementById("openModal").click();
+        openModal.click();
     } else if(data.eaten2 == 12) {
         modalTitle.innerHTML = `${data.name2} Wins!`;
         modalBody.innerHTML = `${data.name2} has eaten 12 pieces. to restart the game click on the restart button`;
-        document.getElementById("openModal").click();
+        openModal.click();
     }else if(movable.length == 0) {
+        // TODO tie
         if(data.eaten1 > data.eaten2) { 
             modalTitle.innerHTML = `${data.name1} Wins!`;
             modalBody.innerHTML = `${data.name1} has eaten 12 pieces. to restart the game click on the restart button`;
@@ -310,11 +313,10 @@ const checkWinLoseTie = () => {
             modalTitle.innerHTML = `${data.name2} Wins!`;
             modalBody.innerHTML = `${data.name2} has eaten 12 pieces. to restart the game click on the restart button`;
         } else {
-            // TODO tie
             modalTitle.innerHTML = `Tie!`;
             modalBody.innerHTML = `Both`;
         }
-        document.getElementById("openModal").click();
+        openModal.click();
     }
 }
 
@@ -343,7 +345,6 @@ const animateMove = async (movements, piece, currentX, currentY) => {
         tempSpot.appendChild(tempPiece);
         tempSpot.style.left = currentX + "px";
         tempSpot.style.top = currentY + "px";
-        let GameBoard = document.getElementById("board");
         GameBoard.appendChild(tempSpot);
         let newX = newSpot.offsetLeft;
         let newY = newSpot.offsetTop;

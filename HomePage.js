@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const playerNameInput2 = document.getElementById("player-name-2");
     const selectButton = document.getElementById("select-button");
     const selectedTeamsDisplay = document.getElementById("selected-teams");
-const title =document.getElementById('exampleModalLabel')
+    const title =document.getElementById('exampleModalLabel')
     const message =document.getElementById('messageContent');
     document.getElementById("test").onclick=function () {
         const teamColor1 = teamColorSelect1.value;
