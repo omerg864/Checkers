@@ -51,14 +51,6 @@ html, body {
     display: flex;
 }
 
-.black-piece {
-    
-}
-
-.red-piece {
-    
-}
-
 .piece-icon {
     height: 100%;
 }
@@ -168,10 +160,6 @@ main {
     flex-direction: column;
     margin: 2vh 2vw;
     box-sizing: border-box;
-}
-
-.crown {
-    height: 60%;
 }
 
 .width-35p {

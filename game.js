@@ -207,6 +207,7 @@
                     }
                 }
         }
+        console.log(row,col,king, movable);
         return movable;
     }
 
@@ -403,7 +404,7 @@
         removeAllClass("glowing-green");
     }
 
-    const move = (event) => {
+    const move = async (event) => {
         let selected = document.getElementsByClassName("glowing-yellow");
         let piece = selected[0].firstChild;
         let row = parseInt(selected[0].id.split("-")[0]);
@@ -428,6 +429,7 @@
             selected[0].classList.remove("glowing-yellow");
             board[row][col] = 0;
             board[newRow][newCol] = turn;
+            let total = 1000;
             if(newSpot.classList.contains("glowing-red")) {
                 console.log(movableSpots[indexMove].eating);
                 let multi = 1;
@@ -436,6 +438,7 @@
                     let eatenSpot = document.getElementById(movableSpots[indexMove].eating[i][0] + "-" + movableSpots[indexMove].eating[i][1]);
                     let eaten = eatenSpot.firstChild;
                     eaten.classList.add("piece-eaten");
+                    total = 1000 * multi - total;
                     if(i === movableSpots[indexMove].eating.length - 1) {
                         eaten.classList.add("opacity-0");
                         setTimeout(() => {
@@ -456,7 +459,11 @@
                 eaten1.innerHTML = data.eaten1;
                 eaten2.innerHTML = data.eaten2;
             }
-            removeGlowing(movableSpots);
+            await sleep(total);
+            removeAllClass("glowing-red");
+            removeAllClass("glowing-yellow");
+            removeAllClass("glowing");
+            removeAllClass("glowing-green");
             if((turn == 1 && newRow == 7) || (turn == 2 && newRow == 0)) {
                 makeKing(piece);
             }
