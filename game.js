@@ -14,7 +14,7 @@
     const pointer1 = document.getElementById("pointer1");
     const pointer2 = document.getElementById("pointer2");
     const player1Tag = document.getElementById("name1");
-    const player2Tag = document.getElementById("name2");
+    const player2Tag = $("#name2");
     const openModal = document.getElementById("openModal");
     const modalTitle = document.getElementById("modalTitle");
     const modalBody = document.getElementById("modalBody");
@@ -25,7 +25,7 @@
         document.getElementById("closeModal").click();
         GameBoard.innerHTML = "";
         player1Tag.innerHTML = "";
-        player2Tag.innerHTML = "";
+        player2Tag.html("");
         if(pointer1.classList.contains("opacity-0")) {
             pointer1.classList.remove("opacity-0");
             pointer2.classList.add("opacity-0");
@@ -47,7 +47,7 @@
                 [0,2,0,2,0,2,0,2],
                 [2,0,2,0,2,0,2,0]];
         player1Tag.innerHTML = data.name1;
-        player2Tag.innerHTML = data.name2;
+        player2Tag.html(data.name2);
         eaten1.innerHTML = data.eaten1;
         eaten2.innerHTML = data.eaten2;
         for(let i=0; i < 8;i++) {
