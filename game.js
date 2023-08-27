@@ -406,6 +406,9 @@
 
     const move = async (event) => {
         let selected = document.getElementsByClassName("glowing-yellow");
+        if (!selected.length) {
+            return;
+        }
         let piece = selected[0].firstChild;
         let row = parseInt(selected[0].id.split("-")[0]);
         let col = parseInt(selected[0].id.split("-")[1]);
@@ -438,7 +441,6 @@
                     let eatenSpot = document.getElementById(movableSpots[indexMove].eating[i][0] + "-" + movableSpots[indexMove].eating[i][1]);
                     let eaten = eatenSpot.firstChild;
                     eaten.classList.add("piece-eaten");
-                    total = 1000 * multi - total;
                     if(i === movableSpots[indexMove].eating.length - 1) {
                         eaten.classList.add("opacity-0");
                         setTimeout(() => {
@@ -451,6 +453,7 @@
                                 eatenSpot.innerHTML = "";
                             }, 1000);
                         }, 1000 * multi);
+                        total = 1000 * multi + 1000;
                         multi++;
                     }
                     board[movableSpots[indexMove].eating[i][0]][movableSpots[indexMove].eating[i][1]] = 0;
@@ -459,11 +462,8 @@
                 eaten1.innerHTML = data.eaten1;
                 eaten2.innerHTML = data.eaten2;
             }
+            showBoardIdle();
             await sleep(total);
-            removeAllClass("glowing-red");
-            removeAllClass("glowing-yellow");
-            removeAllClass("glowing");
-            removeAllClass("glowing-green");
             if((turn == 1 && newRow == 7) || (turn == 2 && newRow == 0)) {
                 makeKing(piece);
             }
