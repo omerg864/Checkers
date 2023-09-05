@@ -1,16 +1,20 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #f0f0f0;
+    background: linear-gradient(to right, #c72525 50%, #694141 50%);
+    background-size: 100% 100%;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
 }
 
 h1 {
-    color: #333;
+    color: #a18383;
 }
 
 .player-section {
     display: inline-block;
-    margin: 20px;
+    margin: 50px;
 }
 
 .team-selection {
@@ -32,12 +36,14 @@ select, input {
 }
 
 button {
-    background-color: #007BFF;
-    color: #fff;
-    padding: 10px 20px;
+    background-color: #ffffff;
+    color: #2564c4;
+    padding: 10px 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+
+
 }
 
 button:hover {
@@ -47,3 +53,29 @@ button:hover {
 #team-display {
     margin-top: 20px;
 }
+.button-noDeco
+{
+    margin: 0;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+}
+
+
+/* Checkers Board Styles */
+#checkers-board {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 0; /* Place it behind other content */
+    border-radius: 20%;
+}
+
+
+img:hover {
+    transform: scale(1.2);
+    transition: transform 0.3s ease;
+
+}
+
+
