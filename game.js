@@ -2,8 +2,8 @@
 var board;
 var turn = 1;
 const turnOpp = {1: 2, 2: 1}
-const redImage = "/red.png";
-const blackImage = "/black.png";
+const redImage = "red.png";
+const blackImage = "black.png";
 var data = {name1: "Player1", name2: "player2", eaten1: 0, eaten2: 0}
 var player1 = localStorage.getItem("player-name-1");
 var player2 = localStorage.getItem("player-name-2");
@@ -372,9 +372,9 @@ const animateMove = async (movements, piece, currentX, currentY) => {
         tempPiece.classList = piece.classList;
         let image = document.createElement("img");
         if(tempPiece.classList.contains("king")) {
-            image.src = `/${color}King.png`;
+            image.src = `${color}King.png`;
         } else {
-            image.src = `/${color}.png`;
+            image.src = `${color}.png`;
         }
         image.classList.add("piece-icon");
         tempPiece.appendChild(image);
@@ -495,7 +495,7 @@ const makeKing = (piece) => {
         } else {
             color = "red";
         }
-        piece.firstChild.src = `/${color}King.png`;
+        piece.firstChild.src = `${color}King.png`;
     }
 }
 
